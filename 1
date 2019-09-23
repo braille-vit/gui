@@ -1,0 +1,65 @@
+from tkinter import *
+from tkinter import filedialog
+import os
+
+root=Tk()
+buttons=[]
+click=Frame(root)
+dis=Frame(root)
+click.pack(side=TOP)
+dis.pack()
+my=Frame()
+my.pack(side=BOTTOM)
+name=''
+text1=''
+
+
+def nextB():
+    pass
+
+def mfileopne():
+    global f
+    file1=filedialog.askopenfile()
+    name=file1.name
+    f = open(name, 'r')
+    text1=f.read(1)
+    canvas1.create_text(50,40,font='Calibri 30',text=text1)
+    canvas1.create_text(150, 40, font='Braille 30',text=text1)
+
+    next=Button(my,text='next',command=lambda: nextB(f)).pack(side=RIGHT)
+    prev = Button(my, text='prev', command=lambda: prevB(f)).pack(side=LEFT)
+
+
+
+
+def nextB(f):
+
+    canvas1.delete("all")
+    text1=f.read(1)
+    canvas1.create_text(50,40,font='Calibri 30',text=text1)
+    canvas1.create_text(150, 40, font='Braille 30',text=text1)
+
+
+def prevB(f):
+    f.seek(f.tell() - 2, os.SEEK_SET)
+    canvas1.delete("all")
+    text1 = f.read(1)
+    canvas1.create_text(50, 40,font='Calibri 30', text=text1)
+    canvas1.create_text(150, 40, font='Braille 30',text=text1)
+
+
+
+
+
+
+
+
+
+
+
+button=Button(click,text="choose a file ",width=30,command=mfileopne).pack()
+canvas1=Canvas(dis)
+canvas1.pack()
+
+root.mainloop()
+f.close()
